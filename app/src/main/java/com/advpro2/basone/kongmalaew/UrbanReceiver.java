@@ -8,9 +8,7 @@ import android.util.Log;
 import com.urbanairship.AirshipReceiver;
 import com.urbanairship.push.PushMessage;
 
-/**
- * Created by bason on 06-Nov-17.
- */
+
 
 public class UrbanReceiver extends AirshipReceiver {
 
@@ -31,7 +29,7 @@ public class UrbanReceiver extends AirshipReceiver {
     }
 
     @Override
-    protected void onChannelRegistrationFailed(Context context) {
+    protected void onChannelRegistrationFailed(@NonNull Context context) {
         Log.i(TAG, "Channel registration failed.");
     }
 
@@ -51,12 +49,10 @@ public class UrbanReceiver extends AirshipReceiver {
     @Override
     protected boolean onNotificationOpened(@NonNull Context context, @NonNull NotificationInfo notificationInfo) {
         Log.i(TAG, "Notification opened. Alert: " + notificationInfo.getMessage().getAlert() + ". NotificationId: " + notificationInfo.getNotificationId());
-        Intent intent = new Intent(context,TestActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+
 
         // Return false here to allow Urban Airship to auto launch the launcher activity
-        return true;
+        return false;
     }
 
     @Override
