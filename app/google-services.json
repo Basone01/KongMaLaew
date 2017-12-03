@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "908713973890",
+    "firebase_url": "https://kongmalaew-e33a2.firebaseio.com",
+    "project_id": "kongmalaew-e33a2",
+    "storage_bucket": "kongmalaew-e33a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:908713973890:android:8b21f270b1a91ad2",
+        "android_client_info": {
+          "package_name": "com.advpro2.basone.kongmalaew"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "908713973890-i1ie4n2v7fjjdnq5ki2silq1jig9v5tn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.advpro2.basone.kongmalaew",
+            "certificate_hash": "7e7309daa88821ccd8264c0f249a9c340bbf8206"
+          }
+        },
+        {
+          "client_id": "908713973890-pcb2vs7i0sgtn7lejk46oq8es4uugmao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjIWynX45DzD3dUTB5cWmlKJmz_eDOKEc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "908713973890-pcb2vs7i0sgtn7lejk46oq8es4uugmao.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
