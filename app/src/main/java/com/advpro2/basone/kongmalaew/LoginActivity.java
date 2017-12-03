@@ -15,6 +15,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -55,12 +56,10 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                 });
-        findViewById(R.id.login_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: ");
-            }
-        });
+        LoginButton loginButton = (LoginButton)findViewById(R.id.login_button);
+        loginButton.setReadPermissions("email", "public_profile");
+
+
 
     }
 
