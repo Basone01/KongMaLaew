@@ -1,7 +1,6 @@
-package com.advpro2.basone.kongmalaew;
+package com.advpro2.basone.kongmalaew.pushservice;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 

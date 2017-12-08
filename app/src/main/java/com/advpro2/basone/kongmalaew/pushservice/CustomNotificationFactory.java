@@ -1,13 +1,13 @@
-package com.advpro2.basone.kongmalaew;
+package com.advpro2.basone.kongmalaew.pushservice;
 
 import android.app.Notification;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 
+import com.advpro2.basone.kongmalaew.R;
 import com.urbanairship.push.PushMessage;
 import com.urbanairship.push.notifications.ActionsNotificationExtender;
 import com.urbanairship.push.notifications.NotificationFactory;
@@ -31,7 +31,7 @@ public class CustomNotificationFactory extends NotificationFactory {
         }
 
         // Build the notification
-        NotificationCompat.Builder builder =  new NotificationCompat.Builder(getContext(),AppAutopilot.chId)
+        NotificationCompat.Builder builder =  new NotificationCompat.Builder(getContext(), AppAutopilot.chId)
                 .setContentTitle("KongMaLaew")
                 .setContentText(message.getAlert())
                 .setAutoCancel(true)

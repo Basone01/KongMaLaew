@@ -1,4 +1,4 @@
-package com.advpro2.basone.kongmalaew;
+package com.advpro2.basone.kongmalaew.pushservice;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;

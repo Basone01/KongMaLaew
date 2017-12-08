@@ -3,5 +3,7 @@
     <string name="app_title">KONGMALAEW</string>
     <string name="facebook_app_id">111939646193714</string>
     <string name="fb_login_protocol_scheme">fb111939646193714</string>
-    <string name="login_button">Go To Login</string>
+    <string name="login_button">SignOut</string>
+    <string name="nav_toggle_open">open</string>
+    <string name="nav_toggle_close">close</string>
 </resources>
