@@ -39,9 +39,9 @@ public class AppAutopilot extends Autopilot {
             Context context = UAirship.getApplicationContext();
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             Log.d("APPPPPPPPPPPPPPPPPP", "onAirshipReady: "+AppAutopilot.chId);
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID+"",
-                    AppAutopilot.chId+"",
-                    NotificationManager.IMPORTANCE_DEFAULT+0);
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+                    AppAutopilot.chId,
+                    NotificationManager.IMPORTANCE_DEFAULT);
 
             notificationManager.createNotificationChannel(channel);
         }

@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e1bee7"
+    tools:context="com.advpro2.basone.kongmalaew.SubscribeFragment">
+
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginTop="50dp"-->
+        <!--android:textSize="50dp"-->
+        <!--android:text="SubScribe"-->
+        <!--android:id="@+id/header"/>-->
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:text="CheckBox" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:text="Brand"
+        android:textSize="30dp"
+        android:background="#fce4ec"
+        android:id="@+id/textview"/>
+    <ListView android:id="@+id/listView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textview"
+        />
+
+    <ListView android:id="@+id/listView2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/listView1"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sizeShoesButton"
+        android:layout_below="@id/listView2"
+        android:text="SHOES SIZE"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sizeShirtButton"
+        android:layout_below="@id/sizeShoesButton"
+        android:text="SHIRT SIZE"/>
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekbar"
+        android:layout_below="@id/sizeShirtButton" />
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/sizeButton"-->
+        <!--android:id="@+id/textviewja"/>-->
+    <!--<Spinner-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/spinnerSize"-->
+        <!--android:layout_below="@id/listView2"></Spinner>-->
+
+</RelativeLayout>

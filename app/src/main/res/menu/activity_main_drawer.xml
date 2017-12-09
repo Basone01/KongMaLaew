@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_merchant"
+            android:icon="@drawable/ic_menu_merchant"
+            android:title="Merchantdise" />
+        <item
+            android:id="@+id/nav_subscribe"
+            android:icon="@drawable/ic_menu_subscribe"
+            android:title="Subscribe" />
+        <item
+            android:id="@+id/nav_visitshop"
+            android:icon="@drawable/ic_menu_visitshop"
+            android:title="Visit Shop" />
+
+        <menu>
+            <item
+                android:id="@+id/nav_signout"
+                android:icon="@drawable/ic_menu_signout"
+                android:title="Sign out" />
+        </menu>
+
+
+    </group>
+
+    <!--<item android:title="Communicate">-->
+        <!--<menu>-->
+
+        <!--</menu>-->
+    <!--</item>-->
+
+</menu>

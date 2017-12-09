@@ -42,7 +42,7 @@ public class UrbanReceiver extends AirshipReceiver {
     protected void onNotificationPosted(@NonNull Context context, @NonNull NotificationInfo notificationInfo) {
         super.onNotificationPosted(context, notificationInfo);
         Log.i(TAG, "Notification posted. Alert: " + notificationInfo.getMessage().getAlert() + ". NotificationId: " + notificationInfo.getNotificationId());
-
+//        Log.d(TAG, "onNotificationPosted: "+        notificationInfo.getMessage().toJsonValue().toString());
     }
 //
     @Override

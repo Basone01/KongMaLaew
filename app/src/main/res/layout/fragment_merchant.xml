@@ -1,0 +1,167 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/scroller"
+
+    android:layout_width="fill_parent"
+
+    android:layout_height="fill_parent"
+
+    android:fillViewport="true" >
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.kanazang.kongmalaewfb.MerchantFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:textSize="50dp"
+        android:text="Merchantdise"
+        android:id="@+id/textview"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="15dp"
+        android:text="Category"
+        android:id="@+id/tvCategory"
+        android:layout_below="@id/textview"/>
+    <Spinner android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/category"
+        android:layout_below="@+id/tvCategory">
+
+    </Spinner>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="15dp"
+        android:text="Product Id"
+        android:id="@+id/tvProductId"
+        android:layout_below="@id/category"/>
+    <EditText android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/productIdEdit"
+        android:layout_below="@+id/tvProductId"
+        android:inputType="number"
+        >
+
+    </EditText>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="15dp"
+        android:text="Product Brand"
+        android:id="@+id/tvBrand"
+        android:layout_below="@id/productIdEdit"/>
+
+    <EditText android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/brandEdit"
+        android:layout_below="@+id/tvBrand"
+
+        >
+
+    </EditText>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="15dp"
+        android:text="Product Model"
+        android:id="@+id/tvModel"
+        android:layout_below="@id/brandEdit"/>
+    <EditText android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/modelEdit"
+        android:layout_below="@+id/tvModel"
+
+        >
+
+    </EditText>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="15dp"
+        android:text="Product Price"
+        android:id="@+id/tvPrice"
+        android:layout_below="@id/modelEdit"/>
+
+    <EditText android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/priceedit"
+        android:layout_below="@+id/tvPrice"
+        android:inputType="number"
+        android:text="0">
+
+    </EditText>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="15dp"
+        android:text="Product Size"
+        android:id="@+id/tvSize"
+        android:layout_below="@id/priceedit"/>
+    <Spinner android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/size"
+        android:layout_below="@+id/tvSize">
+
+    </Spinner>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="15dp"
+        android:text="Gallery"
+        android:id="@+id/tvGallery"
+        android:layout_below="@id/size"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/galleryButton"
+        android:layout_below="@id/tvGallery"
+        android:background="#dcedc8"
+        android:text="Select Picture"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="15dp"
+        android:text="Product Details"
+        android:id="@+id/tvDetail"
+        android:layout_below="@id/galleryButton"/>
+
+    <EditText android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailEdit"
+        android:layout_below="@+id/tvDetail"
+        >
+
+    </EditText>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/submit"
+        android:layout_below="@id/detailEdit"
+        android:background="#dcedc8"
+        android:text="Submit"
+        />
+
+</RelativeLayout>
+</ScrollView>
