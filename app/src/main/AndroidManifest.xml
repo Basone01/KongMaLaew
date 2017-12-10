@@ -43,6 +43,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".DetailActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
 
         <receiver android:name=".pushservice.UrbanReceiver"
             android:exported="false">
