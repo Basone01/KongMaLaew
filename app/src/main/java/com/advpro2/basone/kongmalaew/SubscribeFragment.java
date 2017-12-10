@@ -17,6 +17,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.urbanairship.UAirship;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +28,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class SubscribeFragment extends Fragment {
+    private String TAG = "Subscribe";
     MyAdapter dataAdapter=null;
     ArrayAdapter sizeAdapter;
     ListView lv;
@@ -259,11 +262,20 @@ public class SubscribeFragment extends Fragment {
                         CheckBox cb = (CheckBox) v ;
 
                         Data data = (Data) cb.getTag();
+
                         Toast.makeText(getActivity().getApplicationContext(),
                                 "Subscribe " + cb.getText() +
                                         " now.",
                                 Toast.LENGTH_LONG).show();
+
                         data.setSelected(cb.isChecked());
+                        if (data.isSelected()){
+                                UAirship.shared().getPushManager().editTags().addTag(cb.getText().toString()).apply();
+                                Log.d(TAG, "onClick: Subscribed"+cb.getText());
+                        }else{
+                                UAirship.shared().getPushManager().editTags().removeTag(cb.getText().toString()).apply();
+                                Log.d(TAG, "onClick: Unsubscribed"+cb.getText());
+                        }
 
                     }
                 });
