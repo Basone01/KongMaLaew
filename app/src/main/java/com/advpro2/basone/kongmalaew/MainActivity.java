@@ -1,10 +1,7 @@
 package com.advpro2.basone.kongmalaew;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
-import android.graphics.Canvas;
-import android.graphics.Paint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.NavigationView;
@@ -14,27 +11,28 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.CallbackManager;
-import com.facebook.FacebookSdk;
+import com.advpro2.basone.kongmalaew.Model.Singleton;
+import com.advpro2.basone.kongmalaew.util.CircleTransform;
 import com.facebook.login.LoginManager;
-import com.facebook.login.widget.LoginButton;
-import com.facebook.login.widget.ProfilePictureView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 /**
  * Created by kanazang on 11/2/2017.
  */
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private static String TAG = "KMMain";
+    public static final int LOGIN_REQUEST_CODE= 224;
     TextView textView;
     TextView emailTextView;
     String firstName;
@@ -42,17 +40,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String email;
     ImageView imageView;
     private boolean checkExit=false;
+    NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
-        firstName = Singleton.getInstance().getFirstName();
-        lastName = Singleton.getInstance().getLastName();
-        email = Singleton.getInstance().getEmail();
-
 
         ShopFragment fragment = new ShopFragment();
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -68,18 +62,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-        View view = navigationView.getHeaderView(0);
-        textView = view.findViewById(R.id.nameja);
-        emailTextView = view.findViewById(R.id.email);
-        textView.setText(firstName + " " + lastName);
-        emailTextView.setText(email);
-        imageView = view.findViewById(R.id.facebookpic);
-        Context context = imageView.getContext();
-        Picasso.with(context).load(Singleton.getInstance().getProfilePic()).transform(new CircleTransform()).into(imageView);
+        fireabaseAuthenticate();
 
 
 
@@ -165,7 +151,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             LoginManager.getInstance().logOut();
             Toast.makeText(MainActivity.this, "Sign Out", Toast.LENGTH_LONG).show();
-            finish();
+            Singleton.clear();
+            FirebaseAuth.getInstance().signOut();
+            updateUserData();
+            fireabaseAuthenticate();
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -173,42 +163,68 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public class CircleTransform implements Transformation {
-        @Override
-        public Bitmap transform(Bitmap source) {
-            int size = Math.min(source.getWidth(), source.getHeight());
-
-            int x = (source.getWidth() - size) / 2;
-            int y = (source.getHeight() - size) / 2;
-
-            Bitmap squaredBitmap = Bitmap.createBitmap(source, x, y, size, size);
-            if (squaredBitmap != source) {
-                source.recycle();
-            }
-
-            Bitmap bitmap = Bitmap.createBitmap(size, size, source.getConfig());
-
-            Canvas canvas = new Canvas(bitmap);
-            Paint paint = new Paint();
-            BitmapShader shader = new BitmapShader(squaredBitmap, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP);
-            paint.setShader(shader);
-            paint.setAntiAlias(true);
-
-            float r = size / 2f;
-            canvas.drawCircle(r, r, r, paint);
-
-            squaredBitmap.recycle();
-            return bitmap;
-        }
-
-        @Override
-        public String key() {
-            return "circle";
+    void fireabaseAuthenticate(){
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+//        Log.d(TAG, "fireabaseAuthenticate: "+user.getDisplayName());
+        if (user==null){
+            Intent loginIntent = new Intent(this,LoginActivity.class);
+            startActivityForResult(loginIntent,LOGIN_REQUEST_CODE);
+            finish();
+        }else {
+            setFacebookData();
         }
 
     }
 
+    public void setFacebookData()
+    {
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Singleton.getInstance().setEmail(user.getEmail());
+        Singleton.getInstance().setFirstName(user.getDisplayName().split(" ")[0]);
+        Singleton.getInstance().setLastName(user.getDisplayName().split(" ")[1]);
+        Singleton.getInstance().setProfilePic(user.getPhotoUrl().toString());
+        updateUserData();
+    }
+
+    void updateUserData(){
+        firstName = Singleton.getInstance().getFirstName();
+        lastName = Singleton.getInstance().getLastName();
+        email = Singleton.getInstance().getEmail();
+        View view = navigationView.getHeaderView(0);
+        textView = view.findViewById(R.id.nameja);
+        emailTextView = view.findViewById(R.id.email);
+        textView.setText(firstName + " " + lastName);
+        emailTextView.setText(email);
+        imageView = view.findViewById(R.id.facebookpic);
+        Context context = imageView.getContext();
+        if (Singleton.getInstance().getProfilePic()!=""){
+            Picasso.with(context)
+                    .load(Singleton.getInstance().getProfilePic())
+                    .transform(new CircleTransform())
+                    .centerCrop()
+                    .resize(200,200)
+                    .error(R.drawable.com_facebook_profile_picture_blank_portrait)
+                    .into(imageView);
+        }else {
+            Picasso.with(context)
+                    .load(R.drawable.com_facebook_profile_picture_blank_portrait)
+                    .transform(new CircleTransform())
+                    .centerCrop()
+                    .resize(200,200)
+                    .into(imageView);
+        }
+
+    }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode==LOGIN_REQUEST_CODE){
+//            setFacebookData();
+//            Log.d(TAG, "onActivityResult: s/;dhgusldfuglksjdf;hoglsjd;lfgkhjlskuhlksjfg.lkhjs;lkgvuhohLOGIN");
+//        }
+//    }
 }
 
 

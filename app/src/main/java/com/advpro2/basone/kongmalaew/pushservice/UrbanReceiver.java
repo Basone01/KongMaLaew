@@ -1,9 +1,11 @@
 package com.advpro2.basone.kongmalaew.pushservice;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.advpro2.basone.kongmalaew.MainActivity;
 import com.urbanairship.AirshipReceiver;
 import com.urbanairship.push.PushMessage;
 
@@ -48,10 +50,11 @@ public class UrbanReceiver extends AirshipReceiver {
     @Override
     protected boolean onNotificationOpened(@NonNull Context context, @NonNull NotificationInfo notificationInfo) {
         Log.i(TAG, "Notification opened. Alert: " + notificationInfo.getMessage().getAlert() + ". NotificationId: " + notificationInfo.getNotificationId());
-
+        Intent notiOpened = new Intent(context, MainActivity.class);
+        context.startActivity(notiOpened);
 
         // Return false here to allow Urban Airship to auto launch the launcher activity
-        return false;
+        return true;
     }
 
     @Override

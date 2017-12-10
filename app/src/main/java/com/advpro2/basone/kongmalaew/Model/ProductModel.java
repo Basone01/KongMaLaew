@@ -1,4 +1,4 @@
-package com.advpro2.basone.kongmalaew;
+package com.advpro2.basone.kongmalaew.Model;
 
 /**
  * Created by kanazang on 11/14/2017.

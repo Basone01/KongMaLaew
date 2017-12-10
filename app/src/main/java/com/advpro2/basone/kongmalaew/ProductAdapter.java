@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.advpro2.basone.kongmalaew.Model.ProductModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -40,11 +41,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.OrderVie
     public void onBindViewHolder(final OrderViewHolder holder, int position) {
         ProductModel product = list.get(position);
 
-        holder.product.setText(product.product_name);
-        holder.price.setText(String.valueOf(product.product_price));
+        holder.product.setText(product.getProduct_name());
+        holder.price.setText(String.valueOf(product.getProduct_price()));
 
         //Integer.parseInt("1234");
-        Picasso.with(context).load(product.product_img).placeholder(R.drawable.placeholder).into(holder.img);
+        Picasso.with(context).load(product.getProduct_img()).placeholder(R.drawable.placeholder).into(holder.img);
 
         holder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override

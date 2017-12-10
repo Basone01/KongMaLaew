@@ -43,7 +43,9 @@ public class AppAutopilot extends Autopilot {
                     AppAutopilot.chId,
                     NotificationManager.IMPORTANCE_DEFAULT);
 
-            notificationManager.createNotificationChannel(channel);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
         }
 //         Create a customized default notification factory
         CustomNotificationFactory notificationFactory;

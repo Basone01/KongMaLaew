@@ -32,99 +32,57 @@ import org.json.JSONObject;
 import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
-    static String TAG = "LOGIN";
+    static String TAG = "KMLOGIN";
     LoginButton loginButton;
     CallbackManager callbackManager;
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
-// ...
-// Initialize Firebase Auth
-
-//        FacebookSdk.sdkInitialize(getApplicationContext());
-//        PrintHashKeyInLog();
         setContentView(R.layout.activity_login);
+        addFirebaseAuthListener();
+        setupFacebookLoginButton();
+
+    }
+
+    void setupFacebookLoginButton(){
+
         loginButton = findViewById(R.id.fb_login_btn);
-
         callbackManager = CallbackManager.Factory.create();
-
-
-
-
-        // ..
         LoginManager.getInstance().logInWithReadPermissions(
                 this,
                 Arrays.asList("user_friends", "email", "public_profile"));
-
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-
-
             @Override
             public void onSuccess(LoginResult loginResult) {
-                loginButton.setVisibility(View.GONE);
+//                loginButton.setVisibility(View.GONE);
+                Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
+                Log.i("getUserId", loginResult.getAccessToken().getUserId());
                 handleFacebookAccessToken(loginResult.getAccessToken());
-    //                textView.setText("Log In Successed \n"
-    //                +loginResult.getAccessToken().getUserId()+"\n"+loginResult.getAccessToken().getToken()
-    //                +"\n"+loginResult.getAccessToken().getPermissions());
-
-                    Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
-                    Log.i("getUserId", loginResult.getAccessToken().getUserId());
-    //                Intent intent = new Intent(MainActivity.this,HomeActivity.class);
-
-    //                Singleton.getInstance().setFirstName("LOVE");
-
-
-                setFacebookData(loginResult);
 
 
             }
-
-
-
             @Override
             public void onCancel() {
                 Toast.makeText(LoginActivity.this, "Login Cancel", Toast.LENGTH_LONG).show();
             }
-
             @Override
             public void onError(FacebookException error) {
-
+                Log.e(TAG, "onError: ",error );
             }
-
-
         });
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged: ");
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:");
-                }
-                // ...
-            }
-        };
-
     }
-
 
     private void handleFacebookAccessToken(AccessToken accessToken) {
         AuthCredential credential   = FacebookAuthProvider.getCredential(accessToken.getToken());
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-
-
+                Intent loggedIn = new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(loggedIn);
+                finish();
+                Log.d(TAG, "onComplete: LOGIN");
             }
         });
 
@@ -142,80 +100,27 @@ public class LoginActivity extends AppCompatActivity {
             firebaseAuth.removeAuthStateListener(firebaseAuthListener);
         }
     }
+
+    void addFirebaseAuthListener(){
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    Log.d(TAG, "onAuthStateChanged: Logged In");
+
+                } else {
+
+                    Log.d(TAG, "onAuthStateChanged: Logged Out");
+                }
+            }
+        };
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            loginButton.setVisibility(View.VISIBLE);
-        }
-
+        callbackManager.onActivityResult(requestCode,resultCode,data);
     }
-
-
-    public void setFacebookData(final LoginResult loginResult)
-    {
-
-        GraphRequest request = GraphRequest.newMeRequest(
-                loginResult.getAccessToken(),
-                new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-
-//                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        // Application code
-                        try {
-                            Log.i("Response",response.toString());
-
-                            String email = response.getJSONObject().getString("email");
-                            String firstName = response.getJSONObject().getString("first_name");
-                            String lastName = response.getJSONObject().getString("last_name");
-                            String gender = response.getJSONObject().getString("gender");
-
-                            String profilePic= Profile.getCurrentProfile().getProfilePictureUri(200, 200).toString();
-
-                            Profile profile = Profile.getCurrentProfile();
-//                            String id = profile.getId();
-                            String link = profile.getLinkUri().toString();
-                            Log.i("Link",link);
-                            if (Profile.getCurrentProfile()!=null)
-                            {
-                                Log.i("Login", "ProfilePic" + Profile.getCurrentProfile().getProfilePictureUri(200, 200));
-//                                Picasso.with(getApplicationContext()).load(Profile.getCurrentProfile().getProfilePictureUri(200, 200)).into((Target) profilePictureView);
-                            }
-
-
-                            Log.i("Login" + "Email", email);
-
-                            Log.i("Login"+ "FirstName", firstName);
-                            Log.i("Login" + "LastName", lastName);
-                            Log.i("Login" + "Gender", gender);
-
-                            Singleton.getInstance().setFirstName(firstName);
-                            Singleton.getInstance().setLastName(lastName);
-                            Singleton.getInstance().setProfilePic(profilePic);
-                            Singleton.getInstance().setEmail(email);
-//                            textView.setText(firstName +"\n" +lastName +"\n"+ Singleton.getInstance().getFirstName());
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivityForResult(intent, 1);
-//                            startActivity(intent);
-
-
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-//                        catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-                    }
-                });
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,email,first_name,last_name,gender");
-        request.setParameters(parameters);
-        request.executeAsync();
-
-    }
-
-
 }

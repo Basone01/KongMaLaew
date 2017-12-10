@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.advpro2.basone.kongmalaew.Model.Singleton;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -289,7 +290,7 @@ public class MerchantFragment extends Fragment {
                 params.put ("product_id",productId.getText().toString());
                 params.put ("product_detail",productDetails.getText().toString());
                 params.put ("product_brand",productBrand.getText().toString());
-                params.put("product_uploadby",Singleton.getInstance().getFirstName()+" "+Singleton.getInstance().getLastName() );
+                params.put("product_uploadby", Singleton.getInstance().getFirstName()+" "+Singleton.getInstance().getLastName() );
                 params.put("product_img",downloadUrl.toString());
 //                bundle.putString("product_id", productList.get(position).getProduct_id());
 //                bundle.putString("product_name",productList.get(position).getProduct_name());

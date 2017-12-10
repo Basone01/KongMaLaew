@@ -1,4 +1,4 @@
-package com.advpro2.basone.kongmalaew;
+package com.advpro2.basone.kongmalaew.Model;
 
 /**
  * Created by kanazang on 7/19/2017.
@@ -9,7 +9,7 @@ public class Singleton {
 
     public static Singleton getInstance() {
         if (ourInstance == null){ //if there is no instance available... create new one
-            ourInstance = new Singleton();
+            clear();
         }
 
         return ourInstance;
@@ -19,7 +19,12 @@ public class Singleton {
 
 
 
+
     private Singleton() {
+        firstName = "Guest";
+        lastName = "";
+        profilePic="";
+        email = "";
     }
 
     private String firstName;
@@ -54,6 +59,9 @@ public class Singleton {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    public static void clear(){
+        ourInstance=new Singleton();
     }
 }
 
