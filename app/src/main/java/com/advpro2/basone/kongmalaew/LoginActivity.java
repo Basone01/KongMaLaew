@@ -50,9 +50,9 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton = findViewById(R.id.fb_login_btn);
         callbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().logInWithReadPermissions(
-                this,
-                Arrays.asList("user_friends", "email", "public_profile"));
+//        LoginManager.getInstance().logInWithReadPermissions(
+//                this,
+//                Arrays.asList("user_friends", "email", "public_profile"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -111,7 +111,6 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d(TAG, "onAuthStateChanged: Logged In");
 
                 } else {
-
                     Log.d(TAG, "onAuthStateChanged: Logged Out");
                 }
             }

@@ -2,6 +2,7 @@ package com.advpro2.basone.kongmalaew;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.NavigationView;
@@ -25,6 +26,7 @@ import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
+import com.urbanairship.UAirship;
 
 /**
  * Created by kanazang on 11/2/2017.
@@ -45,7 +47,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        Log.d(TAG, "onCreate: ");
+        syncSubscribedList();
         setContentView(R.layout.activity_main);
 
         ShopFragment fragment = new ShopFragment();
@@ -166,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     void fireabaseAuthenticate(){
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
-//        Log.d(TAG, "fireabaseAuthenticate: "+user.getDisplayName());
+
         if (user==null){
             Intent loginIntent = new Intent(this,LoginActivity.class);
             startActivityForResult(loginIntent,LOGIN_REQUEST_CODE);
@@ -218,13 +221,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode==LOGIN_REQUEST_CODE){
-//            setFacebookData();
-//            Log.d(TAG, "onActivityResult: s/;dhgusldfuglksjdf;hoglsjd;lfgkhjlskuhlksjfg.lkhjs;lkgvuhohLOGIN");
-//        }
-//    }
+    void syncSubscribedList(){
+
+        SharedPreferences pref = getSharedPreferences("brand_Subscribe_list", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        for (String tag : UAirship.shared().getPushManager().getTags()){
+            editor.putBoolean(tag,true);
+            Log.d(TAG, "syncSubscribedList: "+tag);
+        }
+        editor.commit();
+
+        Log.d(TAG, "syncSubscribedList: ");
+    }
+    
 }
 
 

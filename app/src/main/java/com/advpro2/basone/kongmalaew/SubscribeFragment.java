@@ -4,6 +4,7 @@ package com.advpro2.basone.kongmalaew;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -52,13 +53,14 @@ public class SubscribeFragment extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_subscribe,container,false);
+        SharedPreferences subscribePref = getContext().getSharedPreferences("SubscribeList",Context.MODE_PRIVATE);
 
         ArrayList<Data> dataList = new ArrayList<Data>();
-        Data data  = new Data("Nike",false);
+        Data data  = new Data("Nike",subscribePref.getBoolean("Nike",false));
         dataList.add(data);
-        data  = new Data("Adidas",false);
+        data  = new Data("Adidas",subscribePref.getBoolean("Adidas",false));
         dataList.add(data);
-
+        Log.d(TAG, "onCreateView: "+subscribePref.getBoolean("Nike",false));
 
         dataAdapter = new MyAdapter(getContext(),
                 R.layout.brand_info, dataList);
@@ -74,8 +76,8 @@ public class SubscribeFragment extends Fragment {
 //        lv = (ListView) view.findViewById(R.id.listView1);
 //        lv.setAdapter(adapter);
 
-        sizeShoesButton= (Button)view.findViewById(R.id.sizeShoesButton);
-        sizeShirtButton = (Button) view.findViewById(R.id.sizeShirtButton);
+        sizeShoesButton= view.findViewById(R.id.sizeShoesButton);
+        sizeShirtButton =  view.findViewById(R.id.sizeShirtButton);
 //        tv= (TextView) view.findViewById(R.id.textviewja);
         final String[] sizeShoes=new String[]{
             "35" ,"36","37","38","39","40","41","42","43","44","45","46","47"
@@ -120,7 +122,7 @@ public class SubscribeFragment extends Fragment {
                         }
                         if(!sizeShowShoes.isEmpty()) {
                             Toast.makeText(getActivity(),
-                                    sizeShowShoes + "subscibe.", Toast.LENGTH_SHORT).show();
+                                    sizeShowShoes + "subscribe.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -254,9 +256,8 @@ public class SubscribeFragment extends Fragment {
 
                 holder = new ViewHolder();
 
-                holder.category = (CheckBox) convertView.findViewById(R.id.checkBox1);
+                holder.category = convertView.findViewById(R.id.checkBox1);
                 convertView.setTag(holder);
-
                 holder.category.setOnClickListener( new View.OnClickListener() {
                     public void onClick(View v) {
                         CheckBox cb = (CheckBox) v ;
@@ -271,11 +272,12 @@ public class SubscribeFragment extends Fragment {
                         data.setSelected(cb.isChecked());
                         if (data.isSelected()){
                                 UAirship.shared().getPushManager().editTags().addTag(cb.getText().toString()).apply();
-                                Log.d(TAG, "onClick: Subscribed"+cb.getText());
+                                Log.d(TAG, "onClick: Subscribed "+cb.getText());
                         }else{
                                 UAirship.shared().getPushManager().editTags().removeTag(cb.getText().toString()).apply();
-                                Log.d(TAG, "onClick: Unsubscribed"+cb.getText());
+                                Log.d(TAG, "onClick: Unsubscribed "+cb.getText());
                         }
+
 
                     }
                 });
@@ -283,31 +285,13 @@ public class SubscribeFragment extends Fragment {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-
             Data data = dataList.get(position);
-
             holder.category.setText(data.getCategory());
             holder.category.setChecked(data.isSelected());
             holder.category.setTag(data);
-
             return convertView;
+        }
     }
-
-
-
-    }
-
-
-
-
 
 
 }
-
-//public class SubscribeFragment extends FragmentActivity{
-//
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//
-//    }
-//}
