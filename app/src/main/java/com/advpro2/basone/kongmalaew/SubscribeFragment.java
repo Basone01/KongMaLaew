@@ -53,14 +53,14 @@ public class SubscribeFragment extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_subscribe,container,false);
-        SharedPreferences subscribePref = getContext().getSharedPreferences("SubscribeList",Context.MODE_PRIVATE);
+        SharedPreferences subscribePref = getContext().getSharedPreferences("brand_Subscribe_list",Context.MODE_PRIVATE);
 
         ArrayList<Data> dataList = new ArrayList<Data>();
         Data data  = new Data("Nike",subscribePref.getBoolean("Nike",false));
         dataList.add(data);
         data  = new Data("Adidas",subscribePref.getBoolean("Adidas",false));
         dataList.add(data);
-        Log.d(TAG, "onCreateView: "+subscribePref.getBoolean("Nike",false));
+        Log.e(TAG, "onCreateView: "+subscribePref.getBoolean("Nike",false));
 
         dataAdapter = new MyAdapter(getContext(),
                 R.layout.brand_info, dataList);
@@ -271,11 +271,20 @@ public class SubscribeFragment extends Fragment {
 
                         data.setSelected(cb.isChecked());
                         if (data.isSelected()){
-                                UAirship.shared().getPushManager().editTags().addTag(cb.getText().toString()).apply();
-                                Log.d(TAG, "onClick: Subscribed "+cb.getText());
+                            UAirship.shared().getPushManager().editTags().addTag(cb.getText().toString()).apply();
+                            Log.d(TAG, "onClick: Subscribed "+cb.getText());
+                            SharedPreferences pref = getContext().getSharedPreferences("brand_Subscribe_list",Context.MODE_PRIVATE);
+                            SharedPreferences.Editor prefEdit = pref.edit();
+                            prefEdit.putBoolean(cb.getText().toString(),true);
+                                prefEdit.apply();
                         }else{
-                                UAirship.shared().getPushManager().editTags().removeTag(cb.getText().toString()).apply();
-                                Log.d(TAG, "onClick: Unsubscribed "+cb.getText());
+                            UAirship.shared().getPushManager().editTags().removeTag(cb.getText().toString()).apply();
+                            Log.d(TAG, "onClick: Unsubscribed "+cb.getText());
+                            SharedPreferences pref = getContext().getSharedPreferences("brand_Subscribe_list",Context.MODE_PRIVATE);
+                            SharedPreferences.Editor prefEdit = pref.edit();
+                            prefEdit.putBoolean(cb.getText().toString(),false);
+                            prefEdit.apply();
+                            Log.e(TAG, "onClick: "+ pref.getAll().toString());
                         }
 
 

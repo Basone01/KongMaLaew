@@ -27,11 +27,11 @@ public class DetailActivity extends AppCompatActivity {
         String product_brand=intent.getStringExtra("product_brand");
         String product_detail=intent.getStringExtra("product_detail");
         Log.i("product_price",product_price.toString());
-        ImageView imageView = (ImageView)findViewById(R.id.product_img);
-        tvProductName = (TextView) findViewById(R.id.product_name) ;
-        tvProductPrice= (TextView) findViewById(R.id.product_price);
-        tvProductUploadby = (TextView) findViewById(R.id.product_uploadby);
-        tvProductDetail = (TextView) findViewById(R.id.product_detail);
+        ImageView imageView = findViewById(R.id.product_img);
+        tvProductName = findViewById(R.id.product_name) ;
+        tvProductPrice= findViewById(R.id.product_price);
+        tvProductUploadby = findViewById(R.id.product_uploadby);
+        tvProductDetail = findViewById(R.id.product_detail);
         Picasso.with(this).load(product_img).placeholder(R.drawable.placeholder).into(imageView);
         if(product_detail.isEmpty()){
             tvProductDetail.setText("Product Detail : " +"ไม่มีเน้ออออออ");

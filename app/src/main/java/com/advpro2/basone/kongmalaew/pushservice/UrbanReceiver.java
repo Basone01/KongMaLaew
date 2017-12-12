@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.advpro2.basone.kongmalaew.DetailActivity;
 import com.advpro2.basone.kongmalaew.MainActivity;
 import com.urbanairship.AirshipReceiver;
 import com.urbanairship.push.PushMessage;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class UrbanReceiver extends AirshipReceiver {
@@ -50,8 +53,43 @@ public class UrbanReceiver extends AirshipReceiver {
     @Override
     protected boolean onNotificationOpened(@NonNull Context context, @NonNull NotificationInfo notificationInfo) {
         Log.i(TAG, "Notification opened. Alert: " + notificationInfo.getMessage().getAlert() + ". NotificationId: " + notificationInfo.getNotificationId());
-        Intent notiOpened = new Intent(context, MainActivity.class);
+        Intent notiOpened = new Intent(context, DetailActivity.class);
+        JSONObject obj = new JSONObject();
+
+        PushMessage message = notificationInfo.getMessage();
+        String type = message.getExtra("type","none");
+        if(type.equals("New Product")){
+            try {
+                obj.put("product_img",message.getExtra("product_img","none"));
+                obj.put("product_uploadby",message.getExtra("product_uploadby","none"));
+                obj.put("product_detail",message.getExtra("product_detail","none"));
+                obj.put("product_brand",message.getExtra("product_brand","none"));
+                obj.put("product_name",message.getExtra("product_name","none"));
+                obj.put("product_id",message.getExtra("product_id","none"));
+                obj.put("product_price",Double.parseDouble(message.getExtra("product_price","none")));
+
+                notiOpened.putExtra("product_img",message.getExtra("product_img","none"));
+                notiOpened.putExtra("product_uploadby",message.getExtra("product_uploadby","none"));
+                notiOpened.putExtra("product_detail",message.getExtra("product_detail","none"));
+                notiOpened.putExtra("product_brand",message.getExtra("product_brand","none"));
+                notiOpened.putExtra("product_name",message.getExtra("product_name","none"));
+                notiOpened.putExtra("product_id",message.getExtra("product_id","none"));
+                notiOpened.putExtra("product_price",Double.parseDouble(message.getExtra("product_price","none")));
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            Log.d(TAG, "onNotificationOpened: "+obj.toString(5));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         context.startActivity(notiOpened);
+
+        Log.e(TAG, "onNotificationOpened: "+notificationInfo.getMessage().toJsonValue() );
 
         // Return false here to allow Urban Airship to auto launch the launcher activity
         return true;
@@ -63,6 +101,7 @@ public class UrbanReceiver extends AirshipReceiver {
 
         // Return false here to allow Urban Airship to auto launch the launcher
         // activity for foreground notification action buttons
+
         return false;
     }
 

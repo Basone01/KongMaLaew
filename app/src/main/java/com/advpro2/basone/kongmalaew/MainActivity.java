@@ -225,14 +225,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         SharedPreferences pref = getSharedPreferences("brand_Subscribe_list", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-
+//        editor.clear();
         for (String tag : UAirship.shared().getPushManager().getTags()){
             editor.putBoolean(tag,true);
-            Log.d(TAG, "syncSubscribedList: "+tag);
-        }
-        editor.commit();
 
-        Log.d(TAG, "syncSubscribedList: ");
+            Log.e(TAG, "syncSubscribedList: "+tag);
+        }
+        editor.apply();
+
+        Log.e(TAG, "syncSubscribedList: "+pref.getAll());
     }
     
 }

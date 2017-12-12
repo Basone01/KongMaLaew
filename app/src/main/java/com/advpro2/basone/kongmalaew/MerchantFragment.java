@@ -181,7 +181,7 @@ public class MerchantFragment extends Fragment {
                 Log.i("uri",uri.toString());
                 mStorageRef = FirebaseStorage.getInstance().getReference();
                 StorageReference filePath = mStorageRef.child("images/"+uri.getLastPathSegment());
-                postData();
+
                 progressDialog.setMessage("Uploading...");
                 progressDialog.show();
 
@@ -221,6 +221,7 @@ public class MerchantFragment extends Fragment {
                         Log.i("UPPPP", "onSuccess: ");
                         downloadUrl = taskSnapshot.getDownloadUrl();
                         progressDialog.dismiss();
+                        postData();
                     }
                 });
 
@@ -292,13 +293,7 @@ public class MerchantFragment extends Fragment {
                 params.put ("product_brand",productBrand.getText().toString());
                 params.put("product_uploadby", Singleton.getInstance().getFirstName()+" "+Singleton.getInstance().getLastName() );
                 params.put("product_img",downloadUrl.toString());
-//                bundle.putString("product_id", productList.get(position).getProduct_id());
-//                bundle.putString("product_name",productList.get(position).getProduct_name());
-//                bundle.putDouble("product_price",productList.get(position).getProduct_price());
-//                bundle.putString("product_detail",productList.get(position).getProduct_detail());
-//                bundle.putString("product_img",productList.get(position).getProduct_img());
-//                bundle.putString("product_uploadby",productList.get(position).getProduct_uploadby());
-//                bundle.putString("product_brand",productList.get(position).getProduct_brand());
+
                 return params;
             }
         };
