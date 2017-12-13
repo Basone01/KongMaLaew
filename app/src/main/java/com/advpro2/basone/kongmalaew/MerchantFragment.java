@@ -168,6 +168,9 @@ public class MerchantFragment extends Fragment {
         });
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (productBrand.getText().toString().isEmpty()){
+                    return;
+                }
                 // Perform action on click
 //                Toast.makeText(getActivity(),
 //                        "มึงอัพ "+categorySpinner.getSelectedItem()+" ไซส์ "+clothesSpinner.getSelectedItem() +

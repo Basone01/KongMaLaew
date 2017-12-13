@@ -8,6 +8,7 @@ import android.util.Log;
 import com.advpro2.basone.kongmalaew.DetailActivity;
 import com.advpro2.basone.kongmalaew.MainActivity;
 import com.urbanairship.AirshipReceiver;
+import com.urbanairship.UAirship;
 import com.urbanairship.push.PushMessage;
 
 import org.json.JSONException;
@@ -22,6 +23,8 @@ public class UrbanReceiver extends AirshipReceiver {
     protected void onChannelCreated(@NonNull Context context, @NonNull String channelId) {
         Log.i(TAG, "Channel created. Channel Id:" + channelId + ".");
         AppAutopilot.chId=channelId;
+        Log.d(TAG, "onChannelCreated: "+UAirship.shared().getPushManager().getChannelId());
+
     }
 
     @Override

@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="12dp"
     android:background="#e1bee7"
     tools:context="com.advpro2.basone.kongmalaew.SubscribeFragment">
 
@@ -23,10 +24,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_marginTop="?attr/actionBarSize"
         android:text="Brand"
         android:textSize="30dp"
-        android:background="#fce4ec"
+
         android:id="@+id/textview"/>
     <ListView android:id="@+id/listView1"
         android:layout_width="fill_parent"
@@ -56,6 +58,7 @@
     <SeekBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
         android:id="@+id/seekbar"
         android:layout_below="@id/sizeShirtButton" />
     <!--<TextView-->

@@ -70,6 +70,7 @@ public class ShopFragment extends Fragment {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+
                 Toast.makeText(getActivity().getApplicationContext()," Click!!!!" , Toast.LENGTH_SHORT).show();
 //                String Info = listView.getItemAtPosition(position).toString();
 
